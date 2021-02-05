@@ -134,8 +134,8 @@ dev.copy(svg, paste0(outputPrefix, "-MAplot_initial_analysis.svg"))
 dev.off()
 
 # transform raw counts into normalized values
-rld <- rlogTransformation(dds, blind=T)
-vsd <- varianceStabilizingTransformation(dds, blind=T)
+rld <- rlogTransformation(dds, blind=F)
+vsd <- varianceStabilizingTransformation(dds, blind=F)
   
 rld_counts = as.data.frame(assay(rld))
 vst_counts = as.data.frame(assay(vsd))
@@ -147,60 +147,60 @@ write.csv(vst_counts,file = paste0(outputPrefix, "-vst-transformed-counts.csv"))
 write.table(as.data.frame(assay(rld),file = paste0(outputPrefix, "-rlog-transformed-counts.csv")))
 write.table(as.data.frame(assay(vsd),file = paste0(outputPrefix, "-vst-transformed-counts.csv")))
 
-# plot to show effect of transformation
-par(mai = ifelse(1:4 <= 2, par('mai'),0))
-px <- counts(dds)[,1] / sizeFactors(dds)[1]
-ord <- order(px)
-ord <- ord[px[ord] < 150]
-ord <- ord[seq(1,length(ord),length=50)]
-last <- ord[length(ord)]
-vstcol <- c('blue','black')
-matplot(px[ord], cbind(assay(vsd)[,1], log2(px))[ord, ],type='l', lty = 1, col=vstcol, xlab = 'n', ylab = 'f(n)')
-legend('bottomright',legend=c(expression('variance stabilizing transformation'), expression(log[2](n/s[1]))), fill=vstcol)
-dev.copy(svg,paste0(outputPrefix, "-variance_stabilizing.svg"))
-dev.off()
-
-# clustering analysis
-
-distsRL <- dist(t(assay(rld)))
-mat <- as.matrix(distsRL)
-rownames(mat) <- colnames(mat) <- with(colData(dds), paste(condition, sampleNames, sep=" : "))
-hmcol <- colorRampPalette(brewer.pal(9, "GnBu"))(100)
-dev.copy(svg, paste0(outputPrefix, "-clustering.svg"))
-heatmap.2(mat, trace = "none", col = rev(hmcol), margin = c(10,10))
-dev.off()
-
-dev.copy(svg, paste0(outputPrefix, "-pca.svg"))
-degPCA(log2(counts(dds)+0.5), colData(dds),
-       condition="condition", name="condition", shape="condition")
-dev.off()
-
-
-
-# scatter plot of rlog transformations between Sample conditions
-# nice way to compare control and experimental samples
-head(assay(rld))
-# plot(log2(1+counts(dds,normalized=T)[,1:2]),col='black',pch=20,cex=0.3, main='Log2 transformed')
-plot(assay(rld)[,1:3],col='#00000020',pch=20,cex=0.3, main = "rlog transformed")
-plot(assay(rld)[,2:4],col='#00000020',pch=20,cex=0.3, main = "rlog transformed")
-plot(assay(rld)[,6:5],col='#00000020',pch=20,cex=0.3, main = "rlog transformed")
-
-# heatmap of data
-
-# 100 top expressed miRNAs with heatmap.2
-select <- order(rowMeans(counts(ddsClean,normalized=T)),decreasing=T)[1:100]
-my_palette <- colorRampPalette(c("blue",'white','red'))(n=100)
-heatmap.2(assay(vsd)[select,], col=my_palette,
-          scale="row", key=T, keysize=1, symkey=T,
-          density.info="none", trace="none",
-          cexCol=0.3, labRow=F,
-          main="100 Top Expressed mRNAs")
-dev.copy(svg, paste0(outputPrefix, "-HEATMAP.svg"))
-dev.off()
-
-
-# save both files in the corresponding csv tables the normalized ouput for significant genes
-write.csv(resdata1, file = paste0(outputPrefix, "-results-with-normalized_significant.csv"))
-
-# the overall expression of genes
-write.csv(resdata, file = paste0(outputPrefix, "-results-with-normalized.csv"))
+  # plot to show effect of transformation
+  par(mai = ifelse(1:4 <= 2, par('mai'),0))
+  px <- counts(dds)[,1] / sizeFactors(dds)[1]
+  ord <- order(px)
+  ord <- ord[px[ord] < 150]
+  ord <- ord[seq(1,length(ord),length=50)]
+  last <- ord[length(ord)]
+  vstcol <- c('blue','black')
+  matplot(px[ord], cbind(assay(vsd)[,1], log2(px))[ord, ],type='l', lty = 1, col=vstcol, xlab = 'n', ylab = 'f(n)')
+  legend('bottomright',legend=c(expression('variance stabilizing transformation'), expression(log[2](n/s[1]))), fill=vstcol)
+  dev.copy(svg,paste0(outputPrefix, "-variance_stabilizing.svg"))
+  dev.off()
+  
+  # clustering analysis
+  
+  distsRL <- dist(t(assay(rld)))
+  mat <- as.matrix(distsRL)
+  rownames(mat) <- colnames(mat) <- with(colData(dds), paste(condition, sampleNames, sep=" : "))
+  hmcol <- colorRampPalette(brewer.pal(9, "GnBu"))(100)
+  dev.copy(svg, paste0(outputPrefix, "-clustering.svg"))
+  heatmap.2(mat, trace = "none", col = rev(hmcol), margin = c(10,10))
+  dev.off()
+  
+  dev.copy(svg, paste0(outputPrefix, "-pca.svg"))
+  degPCA(log2(counts(dds)+0.5), colData(dds),
+         condition="condition", name="condition", shape="condition")
+  dev.off()
+  
+  
+  
+  # scatter plot of rlog transformations between Sample conditions
+  # nice way to compare control and experimental samples
+  head(assay(rld))
+  # plot(log2(1+counts(dds,normalized=T)[,1:2]),col='black',pch=20,cex=0.3, main='Log2 transformed')
+  plot(assay(rld)[,1:3],col='#00000020',pch=20,cex=0.3, main = "rlog transformed")
+  plot(assay(rld)[,2:4],col='#00000020',pch=20,cex=0.3, main = "rlog transformed")
+  plot(assay(rld)[,6:5],col='#00000020',pch=20,cex=0.3, main = "rlog transformed")
+  
+  # heatmap of data
+  
+  # 100 top expressed miRNAs with heatmap.2
+  select <- order(rowMeans(counts(ddsClean,normalized=T)),decreasing=T)[1:100]
+  my_palette <- colorRampPalette(c("blue",'white','red'))(n=100)
+  heatmap.2(assay(vsd)[select,], col=my_palette,
+            scale="row", key=T, keysize=1, symkey=T,
+            density.info="none", trace="none",
+            cexCol=0.3, labRow=F,
+            main="100 Top Expressed mRNAs")
+  dev.copy(svg, paste0(outputPrefix, "-HEATMAP.svg"))
+  dev.off()
+  
+  
+  # save both files in the corresponding csv tables the normalized ouput for significant genes
+  write.csv(resdata1, file = paste0(outputPrefix, "-results-with-normalized_significant.csv"))
+  
+  # the overall expression of genes
+  write.csv(resdata, file = paste0(outputPrefix, "-results-with-normalized.csv"))
