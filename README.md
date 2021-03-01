@@ -20,8 +20,8 @@
 
 <p> Please add the right file path to the analysis scripts </p>
 <p> Or just copy the files into the same folder as the analysis scripts </p>
-<ul> To use the scripts <ul>
-  <li> Generate first the WGCNA affiliation by using the WGCNA_mRNA and WGCNA_miRNA script </li>
-  <li> Use the filtered AD2,AD3 and 840 DESeq2 normalized count matrices as input </li>
-  <li> If you like to change the filtering process, the python script Cluster_analysis_mrna_sequencing.ipynb provides a mask function </li>
-  <li> For the analysis the Cluster_analysis_mrna_sequencing.ipynb should be run first, althoug we provide the miRNA_edge database as downloadable resource using our docker tool </li>
+<ul> To use the scripts: <ul>
+  <li> Generate first the WGCNA affiliation by using the WGCNA_mRNA and WGCNA_miRNA script to obtain module affiliation of genes and miRNAs </li>
+  <li> Use the filtered AD2,AD3 and 840 DESeq2 normalized count matrices as input or the whole matrices </li>
+  <li> If you like to change the filtering process, the python script Cluster_analysis_mrna_sequencing.ipynb provides a mask function for read counts </li>
+  <li> For the analysis the Cluster_analysis_mrna_sequencing.ipynb should be run first, althoug we provide the miRNA_edge database as downloadable resource which can be found in the our Docker Tools </li>
