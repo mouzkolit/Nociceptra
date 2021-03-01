@@ -118,7 +118,7 @@ ddsClean <- DESeq(ddsClean)
 tab <- table(initial = results(dds)$padj < 0.05,
              cleaned = results(ddsClean)$padj < 0.05)
 addmargins(tab)
-
+  
 write.csv(as.data.frame(tab),file = paste0(outputPrefix, "-replaceoutliers.csv"))
 resClean <- results(ddsClean)
 resClean = subset(res, padj<0.05)
@@ -134,8 +134,8 @@ dev.copy(svg, paste0(outputPrefix, "-MAplot_initial_analysis.svg"))
 dev.off()
 
 # transform raw counts into normalized values
-rld <- rlogTransformation(dds, blind=F)
-vsd <- varianceStabilizingTransformation(dds, blind=F)
+rld <- rlogTransformation(dds, blind=T)
+vsd <- varianceStabilizingTransformation(dds, blind=T)
   
 rld_counts = as.data.frame(assay(rld))
 vst_counts = as.data.frame(assay(vsd))
