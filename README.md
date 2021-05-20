@@ -25,3 +25,11 @@
   <li> Use the filtered AD2,AD3 and 840 DESeq2 normalized count matrices as input or the whole matrices </li>
   <li> If you like to change the filtering process, the python script Cluster_analysis_mrna_sequencing.ipynb provides a mask function for read counts </li>
   <li> For the analysis the Cluster_analysis_mrna_sequencing.ipynb should be run first, althoug we provide the miRNA_edge database as downloadable resource which can be found in the our Docker Tools </li>
+  
+  
+ <h2> Data section </h2>
+ <p> In the Data section we included data necessary for the analysis, but not databases from miRTarbase StarBase and TarBase </p>
+ <p> We added the Ion channel Table --> Ion_channels.xlsx </p>
+ <p> Raw counts for miRNAs and mRNAs derived from htseq, vst counts, as well as filtered counts which are used for the WGCNA analysis </p>
+ <p> We further added gene enrichment tables, gene tables obtained from Pain database and a Day2Day Variance analysis where you can check differentially expressed genes between celllines at different days </p>
+  
