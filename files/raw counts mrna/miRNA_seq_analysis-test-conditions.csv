@@ -1,7 +1,0 @@
-"","type","description"
-"baseMean","intermediate","mean of normalized counts for all samples"
-"log2FoldChange","results","log2 fold change (MAP): condition DAY5 vs DAY0"
-"lfcSE","results","standard error: condition DAY5 vs DAY0"
-"stat","results","LRT statistic: '~ condition' vs '~ 1'"
-"pvalue","results","LRT p-value: '~ condition' vs '~ 1'"
-"padj","results","BH adjusted p-values"
