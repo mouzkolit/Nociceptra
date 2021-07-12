@@ -16,6 +16,12 @@
 <li> <a href = "https://hub.docker.com/repository/docker/muiphysiologie/nociceptra_mui"> NOCICEPTRA Tool at Docker </li>
 </ul>
 
+<h2> Pipelines </h2>
+
+<p> RNA and small RNA sequencing were aligned to the human reference genome GRCH.38.p13 (genecode) with the spice-aware STAR-aligner and the parameter as indicated in the Publication
+and normalized using DESseq2. TPMs were generated with a second pipeline using CLC-workbench with the GRCh38.p7 reference genome from the NCBI webpage</p>
+<p> For both small and long RNA sequencing only unqiuely matched reads were counted. Since small RNA sequencing has also a lot of multipmappers we have employed a second strategy counting multimappers using the CLC Genomic Workbench and annotated using the miRBase 21 release (human and mouse) as well as the Homo_sapiens.GRCh38.ncrna annotation file. This data are provided within the Github repository but were not used in the publication, since we focused only on miRNAs.
+
 <h2> Guidelines </h2>
 
 <p> Please add the right file path to the analysis scripts </p>
@@ -25,6 +31,7 @@
   <li> Use the filtered AD2,AD3 and 840 DESeq2 normalized count matrices as input or the whole matrices </li>
   <li> If you like to change the filtering process, the python script Cluster_analysis_mrna_sequencing.ipynb provides a mask function for read counts </li>
   <li> For the analysis the Cluster_analysis_mrna_sequencing.ipynb should be run first, althoug we provide the miRNA_edge database as downloadable resource which can be found in the our Docker Tools </li>
+  </ul> </ul>
   
   
  <h2> Data section </h2>
