@@ -22,16 +22,12 @@
 and normalized using DESseq2. TPMs were generated with a second pipeline using CLC-workbench with the GRCh38.p7 reference genome from the NCBI webpage</p>
 <p> For both small and long RNA sequencing only unqiuely matched reads were counted. Since small RNA sequencing has also a lot of multipmappers we have employed a second strategy counting multimappers using the CLC Genomic Workbench and annotated using the miRBase 21 release (human and mouse) as well as the Homo_sapiens.GRCh38.ncrna annotation file. This data are provided within the Github repository but were not used in the publication, since we focused only on miRNAs.
 
-<h2> Guidelines </h2>
+<h2>Pipelines Guidelines </h2>
 
-<p> Please add the right file path to the analysis scripts </p>
-<p> Or just copy the files into the same folder as the analysis scripts </p>
-<ul> To use the scripts: <ul>
-  <li> Generate first the WGCNA affiliation by using the WGCNA_mRNA and WGCNA_miRNA script to obtain module affiliation of genes and miRNAs </li>
-  <li> Use the filtered AD2,AD3 and 840 DESeq2 normalized count matrices as input or the whole matrices </li>
-  <li> If you like to change the filtering process, the python script Cluster_analysis_mrna_sequencing.ipynb provides a mask function for read counts </li>
-  <li> For the analysis the Cluster_analysis_mrna_sequencing.ipynb should be run first, althoug we provide the miRNA_edge database as downloadable resource which can be found in the our Docker Tools </li>
-  </ul> </ul>
+<p> First RNA and small RNA sequencing were aligned with STAR and counted with HTseq, then DESeq2 was used to normalized the data for all three cell lines
+  Data was then subsequently parsed to the WGCNA script to detect coexpressed genes and miRNAs and derive modules.
+  The downstream analysis was performed GO-profiling, KEGG pathways, miRNA::mRNA interactions and more!
+</p>
   
   
  <h2> Data section </h2>
@@ -39,4 +35,6 @@ and normalized using DESseq2. TPMs were generated with a second pipeline using C
  <p> We added the Ion channel Table --> Ion_channels.xlsx </p>
  <p> Raw counts for miRNAs and mRNAs derived from htseq, vst counts, as well as filtered counts which are used for the WGCNA analysis </p>
  <p> We further added gene enrichment tables, gene tables obtained from Pain database and a Day2Day Variance analysis where you can check differentially expressed genes between celllines at different days </p>
+ 
+ <p> Furthermore we added a less stringent miRNA analysis using the CLC workbench and adjust for multimappers. This data can be found in the files section in the nc_counts_with_multimappers folder, but only uniquely mapped reads for miRNAs were used for the manuscript </p>
   
