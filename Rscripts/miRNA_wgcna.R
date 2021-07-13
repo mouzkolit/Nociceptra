@@ -3,12 +3,10 @@ library(WGCNA)
 library("biomaRt")
 library(dplyr)
 options(stringsAsFactors = FALSE);
-directory = "/home/physiologie/Desktop/iPSC/mRNA/RawData/analysis/counts/Network_construction"
-setwd(directory)
 
-ad3 = read.csv("AD3_miRNAs_timeline_ltr-results-with-normalized.csv") 
-ad2 = read.csv("AD2_miRNAs_timeline_ltr-results-with-normalized.csv")
-eight = read.csv("840_miRNAs_timeline_ltr-results-with-normalized.csv")
+ad3 = read.csv("../files/normalized_counts_DESEQ2/AD3_miRNAs_timeline_ltr-results-with-normalized.csv") 
+ad2 = read.csv("../files/normalized_counts_DESEQ2/AD2_miRNAs_timeline_ltr-results-with-normalized.csv")
+eight = read.csv("../files/normalized_counts_DESEQ2/840_miRNAs_timeline_ltr-results-with-normalized.csv")
 
 
 nSets = 3;
@@ -64,7 +62,7 @@ dev.off();
 # Network construction--> first consensus
 
 # Choose a set of soft-thresholding powers
-powers = c(seq(4,10,by=1), seq(12,20, by=2));
+powers = c(seq(1,10,by=1), seq(12,20, by=2));
 # Initialize a list to hold the results of scale-free analysis
 powerTables = vector(mode = "list", length = 3);
 # Call the network topology analysis function for each set in turn

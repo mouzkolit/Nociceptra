@@ -3,15 +3,13 @@ library(WGCNA)
 library("biomaRt")
 library(dplyr)
 options(stringsAsFactors = FALSE);
-directory = "/home/physiologie/Desktop/iPSC/mRNA/RawData/analysis/counts/Network_construction"
-setwd(directory)
 
-ad3 = read.csv("iPSC_differentiation_mRNA_only_AD3-results-with-normalized_filtered.csv") 
-ad2 = read.csv("iPSC_differentiation_mRNA_only_AD2-results-with-normalized_filtered.csv")
-eight = read.csv("iPSC_differentiation_mRNA_only_840-results-with-normalized_filtered.csv")
+ad3 = read.csv("../files/filtered counts/iPSC_differentiation_mRNA_only_AD3-results-with-normalized_filtered.csv") 
+ad2 = read.csv("../files/filtered counts/iPSC_differentiation_mRNA_only_AD2-results-with-normalized_filtered.csv")
+eight = read.csv("../files/filtered counts/iPSC_differentiation_mRNA_only_840-results-with-normalized_filtered.csv")
 allowWGCNAThreads()
 
-ALLOW_WGCNA_THREADS=8
+#ALLOW_WGCNA_THREADS=8
 nSets = 3;
 setLabels = c("AD3","AD2","840")
 shortLabels = c("AD3","AD2","840")
@@ -27,9 +25,9 @@ names(multiExpr[[3]]$data) = eight$Row.names;
 rownames(multiExpr[[3]]$data) = names(eight)[-c(1:9)];
 
 
-exprSize = checkSets(multiExpr)
+exprSize = checkSets(multiExpr) # check the quality of the expression set
 gsg = goodSamplesGenesMS(multiExpr, verbose = 2);
-gsg$allOK
+gsg$allOK # if all ok 
 if (!gsg$allOK)
 {
   # Print information about the removed genes:
@@ -48,13 +46,13 @@ if (!gsg$allOK)
   exprSize = checkSets(multiExpr)
 }
 
-sampleTrees = list()
+sampleTrees = list() # cluster all data using average filtering
 for (set in 1:3)
 {
   sampleTrees[[set]] = hclust(dist(multiExpr[[set]]$data), method = "average")
 }
 
-pdf(file = "SampleClustering_filtering.pdf", width = 12, height = 12);
+pdf(file = "SampleClustering_filtering.pdf", width = 12, height = 12); #save the clustering
 par(mfrow=c(2,1))
 par(mar = c(0, 4, 2, 0))
 for (set in 1:3)
