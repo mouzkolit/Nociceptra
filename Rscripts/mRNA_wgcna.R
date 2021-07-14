@@ -4,22 +4,26 @@ library("biomaRt")
 library(dplyr)
 options(stringsAsFactors = FALSE);
 
-ad3 = read.csv("../files/filtered counts/iPSC_differentiation_mRNA_only_AD3-results-with-normalized_filtered.csv") 
-ad2 = read.csv("../files/filtered counts/iPSC_differentiation_mRNA_only_AD2-results-with-normalized_filtered.csv")
-eight = read.csv("../files/filtered counts/iPSC_differentiation_mRNA_only_840-results-with-normalized_filtered.csv")
+
+#read files in 
+ad2 = read.csv("/Users/maximilianzeidler/Dropbox/iPSC/git/files/filtered\ counts/iPSC_differentiation_mRNA_only_AD2-results-with-normalized_filtered.csv")
+ad3 = read.csv("/Users/maximilianzeidler/Dropbox/iPSC/git/files/filtered\ counts//iPSC_differentiation_mRNA_only_AD3-results-with-normalized_filtered.csv") 
+eight = read.csv("/Users/maximilianzeidler/Dropbox/iPSC/git/files/filtered\ counts/iPSC_differentiation_mRNA_only_840-results-with-normalized_filtered.csv")
 allowWGCNAThreads()
 
 #ALLOW_WGCNA_THREADS=8
 nSets = 3;
-setLabels = c("AD3","AD2","840")
-shortLabels = c("AD3","AD2","840")
+setLabels = c("AD2","AD3","840")
+shortLabels = c("AD2","AD3","840")
 multiExpr = vector(mode = "list", length = 3)
-multiExpr[[1]] = list(data = as.data.frame(t(ad3[-c(1:9)])));
-names(multiExpr[[1]]$data) = ad3$Row.names;
-rownames(multiExpr[[1]]$data) = names(ad3)[-c(1:9)];
-multiExpr[[2]] = list(data = as.data.frame(t(ad2[-c(1:9)])));
-names(multiExpr[[2]]$data) = ad2$ensembl_gene_id_version;
-rownames(multiExpr[[2]]$data) = names(ad2)[-c(1:9)];
+
+#make the multiExpr
+multiExpr[[1]] = list(data = as.data.frame(t(ad2[-c(1:9)])));
+names(multiExpr[[1]]$data) = ad2$ensembl_gene_id_version;
+rownames(multiExpr[[1]]$data) = names(ad2)[-c(1:9)];
+multiExpr[[2]] = list(data = as.data.frame(t(ad3[-c(1:9)])));
+names(multiExpr[[2]]$data) = ad3$Row.names;
+rownames(multiExpr[[2]]$data) = names(ad3)[-c(1:9)];
 multiExpr[[3]] = list(data = as.data.frame(t(eight[-c(1:9)])));
 names(multiExpr[[3]]$data) = eight$Row.names;
 rownames(multiExpr[[3]]$data) = names(eight)[-c(1:9)];
@@ -157,31 +161,33 @@ for (set in 1:nSets)
 {
   kME[[set]] = corAndPvalue(multiExpr[[set]]$data, consMEs.unord[[set]]$data);
 }
+
 kME.metaZ = (kME[[1]]$Z + kME[[2]]$Z+kME[[3]]$Z)/sqrt(2);
 kME.metaP = 2*pnorm(abs(kME.metaZ), lower.tail = FALSE);
 kMEmat = rbind(kME[[1]]$cor, kME[[2]]$cor,kME[[3]]$cor, kME[[1]]$p, kME[[2]]$p,kME[[3]]$p, kME.metaZ, kME.metaP);
 MEnames = colnames(consMEs.unord[[1]]$data);
 nMEs = checkSets(consMEs.unord)$nGenes
-  dim(kMEmat) = c(20887, 8*nMEs)
-  
-  hsa_mart <- useEnsembl(biomart  = "ensembl", dataset = "hsapiens_gene_ensembl")
-  b_sig <- getBM(attributes=c("ensembl_gene_id_version",
-                              "external_gene_name",
-                              "gene_biotype"
-                              
+dim(kMEmat) = c(20887, 8*nMEs)
+
+hsa_mart <- useEnsembl(biomart  = "ensembl", dataset = "hsapiens_gene_ensembl")
+b_sig <- getBM(attributes=c("ensembl_gene_id_version",
+                            "external_gene_name",
+                            "gene_biotype"
+                            
   ),
   filters = "ensembl_gene_id_version",
   values=probes,
   mart=hsa_mart)
-    colnames(kMEmat) = spaste(
-      c("kME.set1.", "kME.set2.","kME.set3", "p.kME.set1.", "p.kME.set2.","p.kME.set3", "Z.kME.meta.", "p.kME.meta"),
-      rep(MEnames, rep(8, nMEs)))
-    info = data.frame(Probe = probes,
-                      ModuleLabel = moduleLabels,
-                      ModuleColor = labels2colors(moduleLabels),
-                      kMEmat);
-    
-    end_dataframe = left_join(info,b_sig, by = c("Probe"="ensembl_gene_id_version"))
-    write.csv(end_dataframe, file = "consensusAnalysis-CombinedNetworkResults_filtered_power20.csv",
-              row.names = FALSE, quote = FALSE);
-    save(consMEs, moduleLabels, moduleColors, consTree, file = "End_Consensus-NetworkConstruction-auto_filtered.RData")
+
+colnames(kMEmat) = spaste(
+  c("kME.set1.", "kME.set2.","kME.set3", "p.kME.set1.", "p.kME.set2.","p.kME.set3", "Z.kME.meta.", "p.kME.meta"),
+  rep(MEnames, rep(8, nMEs)))
+info = data.frame(Probe = probes,
+                  ModuleLabel = moduleLabels,
+                  ModuleColor = labels2colors(moduleLabels),
+                  kMEmat);
+
+end_dataframe = left_join(info,b_sig, by = c("Probe"="ensembl_gene_id_version"))
+write.csv(end_dataframe, file = "consensusAnalysis-CombinedNetworkResults_filtered_power20.csv",
+          row.names = FALSE, quote = FALSE);
+save(consMEs, moduleLabels, moduleColors, consTree, file = "End_Consensus-NetworkConstruction-auto_filtered.RData")

@@ -4,21 +4,24 @@ library("biomaRt")
 library(dplyr)
 options(stringsAsFactors = FALSE);
 
-ad3 = read.csv("../files/normalized_counts_DESEQ2/AD3_miRNAs_timeline_ltr-results-with-normalized.csv") 
-ad2 = read.csv("../files/normalized_counts_DESEQ2/AD2_miRNAs_timeline_ltr-results-with-normalized.csv")
-eight = read.csv("../files/normalized_counts_DESEQ2/840_miRNAs_timeline_ltr-results-with-normalized.csv")
+
+# load the datafiles --> please select the right folder
+ad2 = read.csv("files/normalized_counts_DESEQ2/AD2_miRNAs_timeline_ltr-results-with-normalized.csv")
+ad3 = read.csv("files/normalized_counts_DESEQ2/AD3_miRNAs_timeline_ltr-results-with-normalized.csv") 
+eight = read.csv("files/normalized_counts_DESEQ2/840_miRNAs_timeline_ltr-results-with-normalized.csv")
 
 
+#make the multiexpression
 nSets = 3;
-setLabels = c("AD3","AD2","840")
-shortLabels = c("AD3","AD2","840")
+setLabels = c("AD2","AD3","840")
+shortLabels = c("AD2","AD3","840")
 multiExpr = vector(mode = "list", length = 3)
-multiExpr[[1]] = list(data = as.data.frame(t(ad3[-c(1:8)])));
-names(multiExpr[[1]]$data) = ad3$Row.names;
-rownames(multiExpr[[1]]$data) = names(ad3)[-c(1:8)];
-multiExpr[[2]] = list(data = as.data.frame(t(ad2[-c(1:8)])));
-names(multiExpr[[2]]$data) = ad2$Row.names;
-rownames(multiExpr[[2]]$data) = names(ad2)[-c(1:8)];
+multiExpr[[2]] = list(data = as.data.frame(t(ad3[-c(1:8)])));
+names(multiExpr[[2]]$data) = ad3$Row.names;
+rownames(multiExpr[[2]]$data) = names(ad3)[-c(1:8)];
+multiExpr[[1]] = list(data = as.data.frame(t(ad2[-c(1:8)])));
+names(multiExpr[[1]]$data) = ad2$Row.names;
+rownames(multiExpr[[1]]$data) = names(ad2)[-c(1:8)];
 multiExpr[[3]] = list(data = as.data.frame(t(eight[-c(1:8)])));
 names(multiExpr[[3]]$data) = eight$Row.namess;
 rownames(multiExpr[[3]]$data) = names(eight)[-c(1:8)];
@@ -62,7 +65,7 @@ dev.off();
 # Network construction--> first consensus
 
 # Choose a set of soft-thresholding powers
-powers = c(seq(1,10,by=1), seq(12,20, by=2));
+powers = c(seq(4,10,by=1), seq(12,20, by=2));
 # Initialize a list to hold the results of scale-free analysis
 powerTables = vector(mode = "list", length = 3);
 # Call the network topology analysis function for each set in turn
