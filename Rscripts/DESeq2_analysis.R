@@ -1,3 +1,5 @@
+
+#load all the packages
 library(DEGreport)
 library(dplyr)
 library(tibble)
@@ -15,7 +17,7 @@ library("RColorBrewer")
 library("gplots")
 dev.off()
 directory = "../files/raw_counts_mrna" # please set here the directory where files are located/ or mirnas
-setwd(directory)
+setwd(directory) # setting the directory
 
 
 outputPrefix <- "mRNA_seq_analysis" #change for renaming
@@ -76,17 +78,18 @@ colData(ddsHTSeq)$condition <- factor(colData(ddsHTSeq)$condition,
 # run the deseq model over the time
 dds <- DESeq(ddsHTSeq, test = "LRT", reduced=~1)
 res <-results(dds)
-res <- lfcShrink(dds=dds, coef=2, res=res)
-rld <- rlog(dds, blind=TRUE)
+res <- lfcShrink(dds=dds, coef=2, res=res) # for differential expression D36 AD3/AD2 we used ashr shrinkage
+
 mat_rld  = assay(dds)
 des = colData(ddsHTSeq)
 # Subset the LRT results to return genes with padj < 0.05
 ressig = subset(res, padj < 0.05) # for miRNAs set to 0.01
 # save data results and normalized reads to csv
 # insert gene_name_chromosome to the table 
+#make the table for all and for signficant genes
 resdata <- merge(as.data.frame(res), as.data.frame(counts(dds,normalized =TRUE)), by = 'row.names', sort = FALSE)
 resdata1 <- merge(as.data.frame(ressig), as.data.frame(counts(dds,normalized =TRUE)), by = 'row.names', sort = FALSE)
-names(resdata1)[1] <- 'ensembl_gene_id_version'
+names(resdata1)[1] <- 'ensembl_gene_id_version' # set the name
 
 
 # send normalized counts to tab delimited file for GSEA, etc.
@@ -132,10 +135,11 @@ plotMA(res, ylim=c(-8,8),main = "mRNAseq experiment", alpha = 0.05)
 dev.copy(svg, paste0(outputPrefix, "-MAplot_initial_analysis.svg"))
 dev.off()
 
-# transform raw counts into normalized values
+# transform raw counts into normalized values with variance stablization or regularized log
 rld <- rlogTransformation(dds, blind=T)
 vsd <- varianceStabilizingTransformation(dds, blind=T)
-  
+
+# put them into the dataframe and save them for concatenation of later used genes  
 rld_counts = as.data.frame(assay(rld))
 vst_counts = as.data.frame(assay(vsd))
 write.csv(rld_counts, paste0(outputPrefix, "-rlog-transformed-counts.csv"))
@@ -168,8 +172,9 @@ dev.copy(svg, paste0(outputPrefix, "-clustering.svg"))
 heatmap.2(mat, trace = "none", col = rev(hmcol), margin = c(10,10))
 dev.off()
 
+# save the PCA
 dev.copy(svg, paste0(outputPrefix, "-pca.svg"))
-degPCA(log2(counts(dds)+0.5), colData(dds),
+degPCA(log2(counts(dds)+0.5), colData(dds), # here one could also use vst counts or rlog counts
        condition="condition", name="condition", shape="condition")
 dev.off()
 

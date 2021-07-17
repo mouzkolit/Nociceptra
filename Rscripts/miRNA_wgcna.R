@@ -6,9 +6,9 @@ options(stringsAsFactors = FALSE);
 
 
 # load the datafiles --> please select the right folder
-ad2 = read.csv("files/normalized_counts_DESEQ2/AD2_miRNAs_timeline_ltr-results-with-normalized.csv")
-ad3 = read.csv("files/normalized_counts_DESEQ2/AD3_miRNAs_timeline_ltr-results-with-normalized.csv") 
-eight = read.csv("files/normalized_counts_DESEQ2/840_miRNAs_timeline_ltr-results-with-normalized.csv")
+ad2 = read.csv("../files/normalized_counts_DESEQ2/AD2_miRNAs_timeline_ltr-results-with-normalized.csv")
+ad3 = read.csv("../files/normalized_counts_DESEQ2/AD3_miRNAs_timeline_ltr-results-with-normalized.csv") 
+eight = read.csv("../files/normalized_counts_DESEQ2/840_miRNAs_timeline_ltr-results-with-normalized.csv")
 
 
 #make the multiexpression

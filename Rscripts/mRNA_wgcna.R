@@ -6,9 +6,9 @@ options(stringsAsFactors = FALSE);
 
 
 #read files in 
-ad2 = read.csv("/Users/maximilianzeidler/Dropbox/iPSC/git/files/filtered\ counts/iPSC_differentiation_mRNA_only_AD2-results-with-normalized_filtered.csv")
-ad3 = read.csv("/Users/maximilianzeidler/Dropbox/iPSC/git/files/filtered\ counts//iPSC_differentiation_mRNA_only_AD3-results-with-normalized_filtered.csv") 
-eight = read.csv("/Users/maximilianzeidler/Dropbox/iPSC/git/files/filtered\ counts/iPSC_differentiation_mRNA_only_840-results-with-normalized_filtered.csv")
+ad2 = read.csv("../files/filtered_counts_mrna_WGCNA/iPSC_differentiation_mRNA_only_AD2-results-with-normalized_filtered.csv")
+ad3 = read.csv("../files/filtered_counts_mrna_WGCNA/iPSC_differentiation_mRNA_only_AD3-results-with-normalized_filtered.csv") 
+eight = read.csv("../files/filtered_counts_mrna_WGCNA/iPSC_differentiation_mRNA_only_840-results-with-normalized_filtered.csv")
 allowWGCNAThreads()
 
 #ALLOW_WGCNA_THREADS=8
