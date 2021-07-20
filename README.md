@@ -4,14 +4,17 @@
 <h2> Welcome to Git repository for Data Analysis </h2>
 
 <ul>
-<li> Vst and normalized count data generated using the R-script </li>
-<li> WGCNA R script to generate Module assignments and Hub-genes </li>
+<li> Vst and normalized count data generated using the DESeq2 </li>
+<li> TPMs generate with a second pipeline using CLC Workbench </li>
+<li> WGCNA to generate conserved Module assignments and Hub-genes </li>
 <li> Python scripts </li>
 <ul> 
   <li> Script for Supercluster detection </li>
   <li> miRNA Edge Database construction </li>
   <li> Hub-gene networks and miRNA:hub-gene target-spaces </li>
-  <li> miRNA enrichment analysis and mRNA enrichment analysis </li>
+  <li> miRNA enrichment analysis and mRNA disease affiliation analysis </li>
+  <li> Gene enrichment and disease analysis </li>
+  
 </ul>
 <li> <a href = "https://hub.docker.com/repository/docker/muiphysiologie/nociceptra_mui"> NOCICEPTRA Tool at Docker </li>
 </ul>
