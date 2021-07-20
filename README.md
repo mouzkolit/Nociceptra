@@ -20,13 +20,13 @@
 
 <p> RNA and small RNA sequencing were aligned to the human reference genome GRCH.38.p13 (genecode) with the spice-aware STAR-aligner and the parameter as indicated in the Publication
 and normalized using DESseq2. TPMs were generated with a second pipeline using CLC-workbench with the GRCh38.p7 reference genome from the NCBI webpage</p>
-<p> For both small and long RNA sequencing only unqiuely matched reads were counted. Since small RNA sequencing has also a lot of multipmappers we have employed a second strategy counting multimappers using the CLC Genomic Workbench and annotated using the miRBase 21 release (human and mouse) as well as the Homo_sapiens.GRCh38.ncrna annotation file. This data are provided within the Github repository but were not used in the publication, since we focused only on miRNAs.
+<p> For both small and long RNA sequencing only unqiuely matched reads were counted.Multimappers for miRNAs and ncRNAs were added in the files multimapper Section and in the NOCICEPTRA Tool </p>
 
 <h2>Pipelines Guidelines </h2>
 
-<p> First RNA and small RNA sequencing were aligned with STAR and counted with HTseq, then DESeq2 was used to normalized the data for all three cell lines
-  Data was then subsequently parsed to the WGCNA script to detect coexpressed genes and miRNAs and derive modules.
-  The downstream analysis was performed GO-profiling, KEGG pathways, miRNA::mRNA interactions and more!
+<p> First RNA and small RNA sequencing were aligned with STAR and counted with HTseq, then DESeq2 was used to normalized the data for all three cell lines.
+  Data was then subsequently parsed to the WGCNA script to detect coexpressed genes and miRNAs and derive modules as well as module hubs.
+  Downstream analysis performed was Enrichment Analysis, Correlation analysis, Target Prediction, WGCNA
 </p>
   
   
