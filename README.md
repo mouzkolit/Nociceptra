@@ -24,9 +24,9 @@ and normalized using DESseq2. TPMs were generated with a second pipeline using C
 
 <h2>Pipelines Guidelines </h2>
 
-<p> First RNA and small RNA sequencing were aligned with STAR and counted with HTseq, then DESeq2 was used to normalized the data for all three cell lines
-  Data was then subsequently parsed to the WGCNA script to detect coexpressed genes and miRNAs and derive modules.
-  The downstream analysis was performed GO-profiling, KEGG pathways, miRNA::mRNA interactions and more!
+<p> First RNA and small RNA sequencing were aligned with STAR and counted with HTseq, then DESeq2 was used to normalized the data for all three cell lines.
+  Data was then subsequently parsed to the WGCNA script to detect coexpressed genes and miRNAs and derive modules as well as module hubs.
+  Downstream analysis performed was Enrichment Analysis, Correlation analysis, Target Prediction, WGCNA
 </p>
   
   
