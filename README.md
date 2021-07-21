@@ -25,10 +25,6 @@
 and normalized using DESseq2. TPMs were generated with a second pipeline using CLC-workbench with the GRCh38.p7 reference genome from the NCBI webpage</p>
 <p> For both small and long RNA sequencing only unqiuely matched reads were counted.Multimappers for miRNAs and ncRNAs were added in the files multimapper Section and in the NOCICEPTRA Tool </p>
 
-<p> First RNA and small RNA sequencing were aligned with STAR and counted with HTseq, then DESeq2 was used to normalized the data for all three cell lines.
-  Data was then subsequently parsed to the WGCNA script to detect coexpressed genes and miRNAs and derive modules as well as module hubs.
-  Downstream analysis performed was Enrichment Analysis, Correlation analysis, Target Prediction, WGCNA
-</p>
-  
+
 
   
