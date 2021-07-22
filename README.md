@@ -23,7 +23,7 @@
 
 <p> RNA and small RNA sequencing were aligned to the human reference genome GRCH.38.p13 (genecode) with the spice-aware STAR-aligner and the parameter as indicated in the Publication
 and normalized using DESseq2. TPMs were generated with a second pipeline using CLC-workbench with the GRCh38.p7 reference genome from the NCBI webpage</p>
-<p> For both small and long RNA sequencing only unqiuely matched reads were counted.Multimappers for miRNAs and ncRNAs were added in the files multimapper Section and in the NOCICEPTRA Tool </p>
+<p> For both small and long RNA sequencing only unqiuely matched reads were counted.Multimappers for miRNAs and ncRNAs were added in the files multimapper section and in the NOCICEPTRA Tool </p>
 
 
 
